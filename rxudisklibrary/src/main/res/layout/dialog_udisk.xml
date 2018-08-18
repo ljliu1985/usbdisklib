@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="100dp">
+
+
+    <TextView
+        android:id="@+id/tv_path"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/back_color_tice"
+        android:gravity="left|center"
+        android:paddingLeft="12dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_path"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_sdcard"
+            style="@style/disk_v_button"
+            android:drawableLeft="@drawable/disk_icon" />
+
+
+        <Button
+            android:id="@+id/btn_udisk"
+            style="@style/disk_v_button"
+            android:drawableLeft="@drawable/disk_icon" />
+
+        <Button
+            android:id="@+id/btn_goback"
+            style="@style/disk_v_button"
+            android:text="返回" />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            style="@style/disk_v_button"
+            android:text="确认" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            style="@style/disk_v_button"
+            android:text="退出" />
+
+    </LinearLayout>
+    `
+
+    <View
+        android:id="@+id/view_split"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_path"
+        android:layout_marginRight="1dp"
+        android:layout_toRightOf="@id/ll"
+        android:background="@android:color/darker_gray" />
+
+
+    <!--    app:layoutManager="GridLayoutManager"
+        app:spanCount="5"
+        app:layoutManager="LinearLayoutManager"
+        -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_path"
+        android:layout_toRightOf="@id/view_split"
+        app:layoutManager="GridLayoutManager"
+        app:spanCount="1" />
+
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="9"
+            android:gravity="left|center">
+
+            <ImageView
+                android:id="@+id/iv_file"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+
+            <TextView
+                android:id="@+id/tv_file_name"
+                style="@style/tv_file_item_name" />
+
+
+            <TextView
+
+                android:id="@+id/tv_file_time"
+                style="@style/tv_file_item_small" />
+
+            <TextView
+                android:id="@+id/tv_file_size"
+                style="@style/tv_file_item_small"
+                android:layout_below="@id/tv_file_time" />
+
+        </LinearLayout>
+
+
+        <CheckBox
+            android:id="@+id/cb_multi_select"
+            style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+</LinearLayout>
