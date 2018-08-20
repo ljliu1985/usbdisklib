@@ -35,7 +35,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import lk.test.myudisklibrary.R;
 
 /**
  * Created by ljliu on 2018/6/14.
@@ -273,7 +272,9 @@ public class UsbDialogFrament extends DialogFragment implements UsbObserver, OnU
                                 callBackList.add(item.usbFile);
                             }
                         }
-                        callCack.onSelectMultiCallBack(callBackList);
+                        if (callBackList.size() > 0) {
+                            callCack.onSelectMultiCallBack(callBackList);
+                        }
                     } else {
                         for (UsbFileItem item : list) {
                             if (item.isChecked) {

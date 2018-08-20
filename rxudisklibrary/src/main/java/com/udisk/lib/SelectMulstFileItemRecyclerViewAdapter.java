@@ -9,7 +9,6 @@ import android.widget.CompoundButton;
 
 import java.util.Date;
 
-import lk.test.myudisklibrary.R;
 
 /**
  * Created by ljliu on 2018/6/13.
