@@ -4,14 +4,14 @@ For Android 6.0 above system to use USB Disk.
 基于libaums库修改，android 6.0系统以上使用U盘，或者系统磁盘.
 
 project gradle:
-```java
+```groovy
 maven { url 'https://jitpack.io' }
 
 maven { url 'https://dl.bintray.com/magnusja/maven' }
 ```
 
 app gradle:
-```java
+```groovy
  implementation 'com.github.ljliu1985:usbdisklib:1.4'
 ```
 
