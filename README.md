@@ -96,3 +96,7 @@ UsbSdk.init(this);
                     }
                 }).setSelectMode(SelectMode.SelectMultiFile).show();
  ```
+ 
+ ## Donate
+![weixinpay](https://github.com/ljliu1985/other/blob/master/weixinpay.png)
+![alipay](https://github.com/ljliu1985/other/blob/master/zhifubaopay.png)
