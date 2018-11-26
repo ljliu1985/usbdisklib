@@ -19,16 +19,18 @@ public class UsbSdk extends MyObservable<UsbObserver> implements IUsbRootCallBac
     private ServiceConnection serviceConnection;
     private boolean connectionFlag = false;
     private UsbMonitorService.UsbMonitorServiceComm mUsbMonitorServiceComm;
+    private IExcludeUsbDevice excludeUsbDeviceImpl;
 
     private final String USB_SDK_SERVICE_ACTION = "com.udisk.lib.UsbMonitorService";
     private UsbFile mRoot;
     private FileSystem currentFs;
     private static UsbSdk usbSdk;
 
-    public static void init(Application app) {
+    public static UsbSdk init(Application app) {
         if (null == usbSdk) {
             usbSdk = new UsbSdk(app);
         }
+        return usbSdk;
     }
 
     private UsbSdk(final Application app) {
@@ -49,11 +51,18 @@ public class UsbSdk extends MyObservable<UsbObserver> implements IUsbRootCallBac
                 mUsbMonitorServiceComm = (UsbMonitorService.UsbMonitorServiceComm) service;
                 mUsbMonitorServiceComm.setOnUsbRootCallBackListener(UsbSdk.this);
                 mUsbMonitorServiceComm.registerApp(app);
+                mUsbMonitorServiceComm.setOnExcludeUsbDevice(excludeUsbDeviceImpl);
             }
         };
         app.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
+    public void excludeUsbDevice(IExcludeUsbDevice excludeUsbDeviceImpl) {
+        this.excludeUsbDeviceImpl = excludeUsbDeviceImpl;
+        if (null != mUsbMonitorServiceComm) {
+            mUsbMonitorServiceComm.setOnExcludeUsbDevice(excludeUsbDeviceImpl);
+        }
+    }
 
     public static void unregister() {
         if (null == usbSdk) {

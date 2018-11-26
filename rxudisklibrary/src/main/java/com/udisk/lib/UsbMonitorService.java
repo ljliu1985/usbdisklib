@@ -28,17 +28,18 @@ import io.reactivex.schedulers.Schedulers;
 
 public class UsbMonitorService extends Service implements UsbHelper.UsbListener, Application.ActivityLifecycleCallbacks {
 
+
     private String TAG = UsbMonitorService.class.getSimpleName();
     private UsbHelper usbHelper;
     private UsbMassStorageDevice[] massStorageDevices;
     private UsbFile root;
-    private int currentDevice = -1;
     private FileSystem currentFs;
     private Application application;
     private Activity mActivity;
     private UsbMonitorServiceComm mUsbMonitorServiceComm = new UsbMonitorServiceComm();
     private IUsbRootCallBackListener mCallBackListener;
     private boolean requestFlag = true;
+    private IExcludeUsbDevice mExcludeUsbDeviceImpl;
 
 
     @Override
@@ -106,6 +107,10 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
             mCallBackListener = listener;
         }
 
+        public void setOnExcludeUsbDevice(IExcludeUsbDevice excludeUsbDeviceImpl) {
+            mExcludeUsbDeviceImpl = excludeUsbDeviceImpl;
+        }
+
         public void registerApp(Application app) {
             application = app;
             application.registerActivityLifecycleCallbacks(UsbMonitorService.this);
@@ -149,23 +154,31 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
     private void discoverDevice() {
         UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         massStorageDevices = UsbMassStorageDevice.getMassStorageDevices(this);
-        if (massStorageDevices.length == 0) {
+        UsbDevice usbDevice = null;
+        for (UsbMassStorageDevice usbMassStorageDevice : massStorageDevices) {
+            UsbDevice device = usbMassStorageDevice.getUsbDevice();
+            if (!excludeUsbDevice(device)) {
+                usbDevice = device;
+                break;
+            }
+        }
+        if (null == usbDevice) {
             Log.i(TAG, "no udisk");
+            if (null == root && null == currentFs) {
+                return;
+            }
             root = null;
             currentFs = null;
             mCallBackListener.onUsbMonitorCallBack(null, null);
             return;
         }
 
-        currentDevice = 0;
-
 
         if (mActivity == null) {
             Log.i(TAG, "activity is null");
             return;
         }
-        UsbDevice usbDevice = (UsbDevice) mActivity.getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
-        if (usbDevice != null && usbManager.hasPermission(usbDevice)) {
+        if (usbManager.hasPermission(usbDevice)) {
             Log.d(TAG, "received usb device via intent");
             // requesting permission is not needed in this case
             setupDevice();
@@ -176,7 +189,7 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
             if (requestFlag) {//请求一次
                 requestFlag = false;
                 PendingIntent permissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(UsbHelper.ACTION_USB_PERMISSION), 0);
-                usbManager.requestPermission(massStorageDevices[currentDevice].getUsbDevice(), permissionIntent);
+                usbManager.requestPermission(usbDevice, permissionIntent);
             }
         }
     }
@@ -186,20 +199,31 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
      * Sets the device up and shows the contents of the root directory.
      */
     private void setupDevice() {
-        if (currentDevice == -1) {
+        if (null != currentFs || null == massStorageDevices) {
             return;
         }
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(final ObservableEmitter<Boolean> b) {
                 try {
-                    if (null != currentFs) {
+                    UsbDevice usbDevice = null;
+                    UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+                    for (UsbMassStorageDevice usbMassStorageDevice : massStorageDevices) {
+                        usbDevice = usbMassStorageDevice.getUsbDevice();
+                        if (!excludeUsbDevice(usbDevice)) {
+                            if (usbManager.hasPermission(usbDevice)) {
+                                usbMassStorageDevice.init();
+                                // we always use the first partition of the device
+                                currentFs = usbMassStorageDevice.getPartitions().get(0).getFileSystem();
+                                root = currentFs.getRootDirectory();
+                                break;
+                            }
+                        }
+                    }
+                    if (null == usbDevice) {
                         return;
                     }
-                    massStorageDevices[currentDevice].init();
-                    // we always use the first partition of the device
-                    currentFs = massStorageDevices[currentDevice].getPartitions().get(0).getFileSystem();
-                    root = currentFs.getRootDirectory();
+
                     b.onComplete();
                 } catch (Exception e) {
                     b.onError(e);
@@ -234,6 +258,22 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
                     }
                 });
 
+    }
+
+    /**
+     * exclude usb device
+     *
+     * @param usbDevice
+     * @return
+     */
+    public boolean excludeUsbDevice(UsbDevice usbDevice) {
+        if (null == usbDevice) {
+            return true;
+        }
+        if (null != mExcludeUsbDeviceImpl) {
+            return mExcludeUsbDeviceImpl.excludeUsbDevice(usbDevice);
+        }
+        return false;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.lj.com;
 
 import android.Manifest;
+import android.hardware.usb.UsbDevice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,10 +10,12 @@ import android.widget.Button;
 
 import com.github.mjdev.libaums.fs.UsbFile;
 import com.udisk.lib.CommonSelectCallBack;
+import com.udisk.lib.IExcludeUsbDevice;
 import com.udisk.lib.RxPermissionsUtil;
 import com.udisk.lib.SelectMode;
 import com.udisk.lib.UsbDialogFrament;
 import com.udisk.lib.UsbHelper;
+import com.udisk.lib.UsbSdk;
 
 import java.io.File;
 import java.util.List;
@@ -34,7 +37,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_select_excel.setOnClickListener(this);
         btn_select_folder.setOnClickListener(this);
         btn_select_multi_file.setOnClickListener(this);
-
+        UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
+            @Override
+            public boolean excludeUsbDevice(UsbDevice usbDevice) {
+                //eg
+                if (usbDevice.getVendorId() == 8201) {
+                    return true;
+                }
+                return false;
+            }
+        });
         RxPermissionsUtil.requestPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
     }
