@@ -30,6 +30,22 @@ Simple Usage
 UsbSdk.init(this);
 ```
 
+ init for exclude other usb device.
+ 
+```java
+UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
+            @Override
+            public boolean excludeUsbDevice(UsbDevice usbDevice) {
+                //eg
+                if (usbDevice.getVendorId() == 8201) {
+                    return true;
+                }
+                return false;
+            }
+        });
+```
+
+
 2.) select ".xls|.xlsx" files:
 
 ```java
