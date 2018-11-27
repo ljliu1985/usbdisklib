@@ -12,7 +12,7 @@ maven { url 'https://dl.bintray.com/magnusja/maven' }
 
 app gradle:
 ```groovy
- implementation 'com.github.ljliu1985:usbdisklib:1.4'
+ implementation 'com.github.ljliu1985:usbdisklib:1.5'
 ```
 
 Screenshots
@@ -29,6 +29,22 @@ Simple Usage
 ```java
 UsbSdk.init(this);
 ```
+
+ init for exclude other usb device.
+ 
+```java
+UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
+            @Override
+            public boolean excludeUsbDevice(UsbDevice usbDevice) {
+                //eg
+                if (usbDevice.getVendorId() == 8201) {
+                    return true;
+                }
+                return false;
+            }
+        });
+```
+
 
 2.) select ".xls|.xlsx" files:
 
