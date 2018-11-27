@@ -35,7 +35,6 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
     private UsbFile root;
     private FileSystem currentFs;
     private Application application;
-    private Activity mActivity;
     private UsbMonitorServiceComm mUsbMonitorServiceComm = new UsbMonitorServiceComm();
     private IUsbRootCallBackListener mCallBackListener;
     private boolean requestFlag = true;
@@ -69,12 +68,10 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
 
     @Override
     public void onActivityStarted(Activity activity) {
-        mActivity = activity;
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-        mActivity = activity;
         if (currentFs == null) {
             discoverDevice();
         }
@@ -117,12 +114,6 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
             setupDevice();
         }
 
-        public void registerActivity(Activity activity) {
-            mActivity = activity;
-            if (mCallBackListener != null) {
-                mCallBackListener.onUsbMonitorCallBack(root, currentFs);
-            }
-        }
 
         public void unregister() {
             if (null != application) {
@@ -173,11 +164,6 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
             return;
         }
 
-
-        if (mActivity == null) {
-            Log.i(TAG, "activity is null");
-            return;
-        }
         if (usbManager.hasPermission(usbDevice)) {
             Log.d(TAG, "received usb device via intent");
             // requesting permission is not needed in this case
@@ -186,7 +172,7 @@ public class UsbMonitorService extends Service implements UsbHelper.UsbListener,
             // first request permission from user to communicate with the
             // underlying
             // UsbDevice
-            if (requestFlag) {//请求一次
+            if (requestFlag) {
                 requestFlag = false;
                 PendingIntent permissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(UsbHelper.ACTION_USB_PERMISSION), 0);
                 usbManager.requestPermission(usbDevice, permissionIntent);
