@@ -181,7 +181,6 @@ public class UsbDialogFrament extends DialogFragment implements UsbObserver, OnU
             updateShowFiles();
         }
 
-
          /*
           if(currentFs!=null){
           switch (currentFs.getType()) {
