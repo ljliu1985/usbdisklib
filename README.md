@@ -12,7 +12,7 @@ maven { url 'https://dl.bintray.com/magnusja/maven' }
 
 app gradle:
 ```groovy
- implementation 'com.github.ljliu1985:usbdisklib:1.6'
+ implementation 'com.github.ljliu1985:usbdisklib:1.7'
 ```
 
 Screenshots
