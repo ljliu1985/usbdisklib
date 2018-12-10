@@ -174,11 +174,13 @@ public class UsbDialogFrament extends DialogFragment implements UsbObserver, OnU
         if (position >= list.size()) {
             return;
         }
-        currPath = list.get(position).getAbsolutePath();
-        if (list.get(position).isDirectory()) {
-            root = list.get(position).usbFile;
+        final UsbFileItem usbFileItem = list.get(position);
+        currPath = usbFileItem.getAbsolutePath();
+        if (usbFileItem.isDirectory()) {
+            root = usbFileItem.usbFile;
             updateShowFiles();
         }
+
 
          /*
           if(currentFs!=null){
