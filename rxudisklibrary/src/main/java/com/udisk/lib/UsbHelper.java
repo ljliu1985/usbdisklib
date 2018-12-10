@@ -242,12 +242,12 @@ public final class UsbHelper {
                         p.onNext(writeCount);
                     }
                     uos.flush();
-                    p.onComplete();
                 } catch (Exception e) {
                     p.onError(e);
                 } finally {
                     IOCloseUtils.closeStream(fis, uos);
                 }
+                p.onComplete();
 
             }
         }).subscribeOn(Schedulers.io())
@@ -314,12 +314,12 @@ public final class UsbHelper {
                         p.onNext(writeCount);
                     }
                     uos.flush();
-                    p.onComplete();
                 } catch (Exception e) {
                     p.onError(e);
                 } finally {
                     IOCloseUtils.closeStream(is, uos);
                 }
+                p.onComplete();
 
             }
         }).subscribeOn(Schedulers.io())
