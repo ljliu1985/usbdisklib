@@ -79,8 +79,9 @@ UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
                 }).setSelectMode(SelectMode.SelectSingleFile).show();
 ```                
 
-3)select sigle Dir
-...java
+3.)select sigle Dir
+
+```java
    new UsbDialogFrament.Builder(this).setFilter(UsbHelper.REGEX_IMAGE_FILE).setSelectCallBack(new CommonSelectCallBack() {
                     @Override
                     public void onSelectSingleCallBack(Object objFile) {
@@ -94,9 +95,10 @@ UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
 
                     }
                 }).setSelectMode(SelectMode.SelectSingleDir).show();
-...
+```      
 
-4) select multi files
+4.) select multi files
+
 ```java
    new UsbDialogFrament.Builder(this).setSelectCallBack(new CommonSelectCallBack() {
                     @Override
