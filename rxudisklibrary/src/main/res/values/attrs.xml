@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="styleColor" format="color" />
+    <attr name="buttonStyle" format="reference" />
+    <attr name="buttonTextStyle" format="reference" />
+</resources>

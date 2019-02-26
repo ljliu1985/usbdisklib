@@ -13,6 +13,7 @@ import com.udisk.lib.CommonSelectCallBack;
 import com.udisk.lib.IExcludeUsbDevice;
 import com.udisk.lib.RxPermissionsUtil;
 import com.udisk.lib.SelectMode;
+import com.udisk.lib.StyleColor;
 import com.udisk.lib.UsbDialogFrament;
 import com.udisk.lib.UsbHelper;
 import com.udisk.lib.UsbSdk;
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //sdcard file
                         }
                     }
-                }).setSelectMode(SelectMode.SelectSingleFile).show();
+                }).setSelectMode(SelectMode.SelectSingleFile).setStyleColor(StyleColor.Red).show();
                 break;
             case R.id.btn_select_folder:
                 new UsbDialogFrament.Builder(this).setFilter(UsbHelper.REGEX_IMAGE_FILE).setSelectCallBack(new CommonSelectCallBack() {
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
 
                     }
-                }).setSelectMode(SelectMode.SelectSingleDir).show();
+                }).setSelectMode(SelectMode.SelectSingleDir).setStyleColor(StyleColor.Blue).show();
                 break;
             case R.id.btn_select_multi_file:
                 new UsbDialogFrament.Builder(this).setSelectCallBack(new CommonSelectCallBack() {
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.i(TAG, "File type, path:" + ((File) fileList.get(0)).getAbsolutePath());
                         }
                     }
-                }).setSelectMode(SelectMode.SelectMultiFile).show();
+                }).setSelectMode(SelectMode.SelectMultiFile).setStyleColor(StyleColor.Green).show();
                 break;
         }
 

@@ -12,4 +12,5 @@ public class UsbDiialogParams {
     protected String regex;
     protected SelectCallBack callBack;
     protected SelectMode selectMode;
+    protected StyleColor styleColor;
 }

@@ -20,6 +20,9 @@ Screenshots
 <img src="https://github.com/ljliu1985/DemoUSBDisk/blob/master/device-2018-08-20-091339.png">
 <img src="https://github.com/ljliu1985/DemoUSBDisk/blob/master/device-2018-08-20-091408.png">
 <img src="https://github.com/ljliu1985/DemoUSBDisk/blob/master/device-2018-08-20-092051.png">
+<img src="https://github.com/ljliu1985/DemoUSBDisk/blob/master/device-2019-02-26-163133.png">
+<img src="https://github.com/ljliu1985/DemoUSBDisk/blob/master/device-2019-02-26-163155.png">
+<img src="https://github.com/ljliu1985/DemoUSBDisk/blob/master/device-2019-02-26-163216.png">
 
 
 Simple Usage
@@ -76,7 +79,7 @@ UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
                             //sdcard file
                         }
                     }
-                }).setSelectMode(SelectMode.SelectSingleFile).show();
+                }).setStyleColor(StyleColor.Red).setSelectMode(SelectMode.SelectSingleFile).show();
 ```                
 
 3.)select sigle Dir
@@ -94,7 +97,7 @@ UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
                         }
 
                     }
-                }).setSelectMode(SelectMode.SelectSingleDir).show();
+                }).setSelectMode(SelectMode.SelectSingleDir).setStyleColor(StyleColor.Blue).show();
 ```      
 
 4.) select multi files
@@ -112,5 +115,5 @@ UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
                             Log.i(TAG, "File type, path:" + ((File) fileList.get(0)).getAbsolutePath());
                         }
                     }
-                }).setSelectMode(SelectMode.SelectMultiFile).show();
+                }).setSelectMode(SelectMode.SelectMultiFile).setStyleColor(StyleColor.Green).show();
  ```

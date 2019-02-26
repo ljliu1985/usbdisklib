@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="dialog_background">#2196F3</color>
-    <color name="back_color_tice">#90C31E</color>
+    <color name="bg_blue">#2196F3</color>
+    <color name="bg_red">#D8001A</color>
+    <color name="bg_green">#18BD5F</color>
 </resources>

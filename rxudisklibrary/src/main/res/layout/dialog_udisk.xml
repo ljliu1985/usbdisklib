@@ -10,8 +10,8 @@
     <TextView
         android:id="@+id/tv_path"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/back_color_tice"
+        android:layout_height="60dp"
+        android:background="?attr/styleColor"
         android:gravity="left|center"
         android:paddingLeft="12dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />

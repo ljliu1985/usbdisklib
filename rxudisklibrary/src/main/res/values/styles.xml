@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -18,12 +18,16 @@
     <style name="disk_v_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:paddingLeft">2dp</item>
         <item name="android:paddingRight">2dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/btn_pressed_a</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">?attr/buttonStyle</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/buttonTextStyle</item>
     </style>
 
     <style name="disk_h_button">
@@ -52,6 +56,32 @@
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">60dp</item>
         <item name="android:layout_margin">2dp</item>
+    </style>
+
+    <style name="Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="StyleRed" parent="Fullscreen">
+        <item name="styleColor">@color/bg_red</item>
+        <item name="buttonStyle">@drawable/btn_drawable_red_gray</item>
+        <item name="buttonTextStyle">@drawable/text_color_white_red_selector</item>
+    </style>
+
+    <style name="StyleGreen" parent="Fullscreen">
+        <item name="styleColor">@color/bg_green</item>
+        <item name="buttonStyle">@drawable/btn_drawable_green_gray</item>
+        <item name="buttonTextStyle">@drawable/text_color_white_green_selector</item>
+    </style>
+
+    <style name="StyleBlue" parent="Fullscreen">
+        <item name="styleColor">@color/bg_blue</item>
+        <item name="buttonStyle">@drawable/btn_drawable_blue_gray</item>
+        <item name="buttonTextStyle">@drawable/text_color_white_blue_selector</item>
     </style>
 
 </resources>

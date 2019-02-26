@@ -1,11 +1,13 @@
 package com.udisk.lib;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -63,6 +65,7 @@ public class UsbDialogFrament extends DialogFragment implements UsbObserver, OnU
     private SelectCallBack callCack;
     private SelectMode mSelectMode;
     private FragmentActivity mActivity;
+    private StyleColor mStyleColor;
 
 
     private UsbDialogFrament(UsbDiialogParams p) {
@@ -76,14 +79,30 @@ public class UsbDialogFrament extends DialogFragment implements UsbObserver, OnU
         if (TextUtils.isEmpty(this.regex)) {
             regex = UsbHelper.REGEX_ALL_FILE;
         }
+        mStyleColor = p.styleColor;
     }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setStyle(STYLE_NO_FRAME, android.R.style.Theme_Holo_Light);
-        setStyle(STYLE_NO_TITLE, android.R.style.Theme_Holo_Light);
+        if (null == mStyleColor) {
+            mStyleColor = StyleColor.Blue;
+        }
+        switch (mStyleColor) {
+            case Red:
+                setStyle(DialogFragment.STYLE_NO_FRAME, R.style.StyleRed);
+                break;
+            case Blue:
+                setStyle(DialogFragment.STYLE_NO_FRAME, R.style.StyleBlue);
+                break;
+            case Green:
+            default:
+                setStyle(DialogFragment.STYLE_NO_FRAME, R.style.StyleGreen);
+                break;
+        }
+
+
     }
 
     @Nullable
@@ -93,6 +112,13 @@ public class UsbDialogFrament extends DialogFragment implements UsbObserver, OnU
         mContext = getActivity();
         init(view);
         return view;
+    }
+
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new FullScreenDialog(getActivity(), getTheme());
     }
 
     public void init(View view) {
@@ -273,9 +299,7 @@ public class UsbDialogFrament extends DialogFragment implements UsbObserver, OnU
                                 callBackList.add(item.usbFile);
                             }
                         }
-                        if (callBackList.size() > 0) {
-                            callCack.onSelectMultiCallBack(callBackList);
-                        }
+                        callCack.onSelectMultiCallBack(callBackList);
                     } else {
                         for (UsbFileItem item : list) {
                             if (item.isChecked) {
@@ -430,6 +454,12 @@ public class UsbDialogFrament extends DialogFragment implements UsbObserver, OnU
             p.selectMode = selectMode;
             return this;
         }
+
+        public Builder setStyleColor(StyleColor styleColor) {
+            p.styleColor = styleColor;
+            return this;
+        }
+
 
         public UsbDialogFrament build() {
             usbDialogFrament = new UsbDialogFrament(p);
