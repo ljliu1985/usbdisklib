@@ -117,3 +117,5 @@ UsbSdk.init(getApplication()).excludeUsbDevice(new IExcludeUsbDevice() {
                     }
                 }).setSelectMode(SelectMode.SelectMultiFile).setStyleColor(StyleColor.Green).show();
  ```
+ 
+ 5.备注:从U盘复制文件到SD卡，若此目录下面有数千个文件，关闭IO流时会耗费大量时间，复制会变慢，可以考虑不关闭U盘文件的IO流，SD卡的IO流可关闭。
