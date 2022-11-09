@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "27.0.3"
+    compileSdkVersion compilesdkversion
+    buildToolsVersion buildtoolsversion
 
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 23
+        minSdkVersion minsdkversion
+        maxSdkVersion maxsdkversion
+        targetSdkVersion targetsdkversion
         versionCode 2
         versionName "1.2"
 
@@ -23,17 +24,15 @@ android {
 repositories { flatDir { dirs 'libs' } }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'com.android.support:appcompat-v7:26.+'
-    implementation 'com.android.support:recyclerview-v7:26.+'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-    implementation 'io.reactivex.rxjava2:rxjava:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.dependencies["espresso"]
+    implementation rootProject.ext.dependencies["appcompat"]
+    implementation rootProject.ext.dependencies["recyclerview"]
+    implementation rootProject.ext.dependencies["constraintlayout"]
+    implementation rootProject.ext.dependencies["rxjava"]
+    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["rxpermissions"]
     implementation project(':libaums')
     implementation project(':javafs')
 

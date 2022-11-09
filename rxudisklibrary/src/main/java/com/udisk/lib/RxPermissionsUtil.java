@@ -1,6 +1,7 @@
 package com.udisk.lib;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.tbruyelle.rxpermissions2.Permission;
@@ -11,7 +12,7 @@ import io.reactivex.functions.Consumer;
 public final class RxPermissionsUtil {
 
 
-    public static void requestPermissions(Activity activity, String... permissions) {
+    public static void requestPermissions(FragmentActivity activity, String... permissions) {
         new RxPermissions(activity).requestEach(permissions)
                 .subscribe(new Consumer<Permission>() {
                     @Override

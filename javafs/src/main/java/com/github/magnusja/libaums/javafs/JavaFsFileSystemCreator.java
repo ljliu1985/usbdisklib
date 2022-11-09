@@ -10,7 +10,6 @@ import com.github.mjdev.libaums.fs.FileSystem;
 import com.github.mjdev.libaums.fs.FileSystemCreator;
 import com.github.mjdev.libaums.partition.PartitionTableEntry;
 
-import org.apache.log4j.Logger;
 import org.jnode.fs.FileSystemException;
 import org.jnode.fs.FileSystemType;
 import org.jnode.fs.exfat.ExFatFileSystemType;
@@ -27,7 +26,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.mindpipe.android.logging.log4j.LogCatAppender;
 
 
 /**
@@ -41,9 +39,6 @@ public class JavaFsFileSystemCreator implements FileSystemCreator {
     private static List<FileSystemType> fsTypes = new ArrayList<>();
 
     static {
-       final Logger root = Logger.getRootLogger();
-        final LogCatAppender logCatAppender = new LogCatAppender();
-        root.addAppender(logCatAppender);
 
         fsTypes.add(new NTFSFileSystemType());
         fsTypes.add(new ExFatFileSystemType());
